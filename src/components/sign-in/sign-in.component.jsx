@@ -1,12 +1,12 @@
 import React from 'react';
 import FormInput from '../form-input/form-input.component';
-import CustomButton from '../custom-buttom/custom-button.component';
+import CustomButton from '../custom-button/custom-button.component';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import './sign-in.styles.scss';
 
 class SignIn extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
 
         this.state= {
             email : '',
@@ -19,7 +19,7 @@ class SignIn extends React.Component{
         event.preventDefault();
         const { email, password } = this.state;
         try{
-            await auth.soignInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email, password);
             this.setState({ email: '', password: '' });
         } catch (error) {
             console.log(error);
@@ -28,7 +28,8 @@ class SignIn extends React.Component{
 
     handleChange = event => {
         const { value, name } = event.target;
-        this.setState({[name] : value})
+        //dynamically set the property
+        this.setState({[name] : value});
     }
 
     render(){
@@ -40,10 +41,10 @@ class SignIn extends React.Component{
                     <FormInput name='email' type='email' handleChange={this.handleChange} value={this.state.email} label='email' required />
                     <FormInput name='password' type='password' value={this.state.password} handleChange={this.handleChange} label='password' required/>
                     <div className='buttons'>
-                    <CustomButton type='submit'>Sign In </CustomButton>
-                    <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
-                        Sign In With Google
-                    </CustomButton>
+                        <CustomButton type='submit'>Sign In </CustomButton>
+                        <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+                            Sign In With Google
+                        </CustomButton>
                     </div>
                 </form>
             </div>
